@@ -1,0 +1,24 @@
+scalar Date
+
+type Todo {
+  _id: ID
+  description: String
+  done: Boolean
+  userId: String
+  creatAt: Date
+
+  }
+
+input TodoInput {
+  description: String
+  done: Boolean
+  userId: String
+}
+
+type Query {
+  getTodosByUser(userId: String): [Todo]
+}
+
+type Mutation {
+  addTodo(input: TodoInput): Todo
+}

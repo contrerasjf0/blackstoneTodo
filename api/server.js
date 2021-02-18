@@ -2,64 +2,26 @@
 require('dotenv').config()
 
 const express = require('express');
-
 const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql')
+const { makeExecutableSchema } = require('graphql-tools');
 const cors = require('cors');
+const { readFileSync } = require('fs');
+const { join } = require('path');
 
 const { config } = require('./config');
 const connectDB = require('./db');
 
-const Todo = require('./models/Todo');
-const { GraphQLDate } = require('graphql-iso-date');
+
 const app = express();
 
+const resolvers = require('./resolvers')
 
-const schemas = buildSchema(`
-  scalar Date
+const typeDefs = readFileSync(
+  join(__dirname, 'graphql', 'schema.graphql'),
+  'utf-8'
+);
 
-  type Todo {
-    _id: ID
-    description: String
-    done: Boolean
-    userId: String
-    creatAt: Date
-
-  }
-
-  input TodoInput {
-    description: String
-    done: Boolean
-    userId: String
-  }
-
-  type Query {
-    getTodosByUser(userId: String): [Todo]
-  }
-
-  type Mutation {
-    addTodo(input: TodoInput): Todo
-  }
-`);
-
-var resolvers = {
-  Date: GraphQLDate,
-  getTodosByUser: async ({ userId }) => {
-    const todo = new Todo();
-
-    const todos = await todo.getByUserId( userId );
-
-    return todos;
-  },
-  addTodo: async ({ input }) => {
-    const todo = new Todo();
-
-    const savedTodo = await todo.add(input);
-
-    return savedTodo;
-  }
-};
-
+const schemas = makeExecutableSchema({ typeDefs, resolvers })
 
 app.use(cors());
 
