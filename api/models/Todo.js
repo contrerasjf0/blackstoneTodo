@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { ObjectId } = mongoose.Types;
 
 const TodoSchema = new Schema({
   description: String,
@@ -41,8 +42,16 @@ class Todo {
     return documents;
   }
 
-  update(){
+  async update(id, data){
 
+    let document = data;
+
+    try {
+      document = await this.model.findOneAndUpdate({_id: new ObjectId(id) }, data, {new: true});
+    } catch (err) {
+      console.log('Error to update records');
+    }
+    return document;
   }
 
 }

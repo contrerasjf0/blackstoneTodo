@@ -1,18 +1,22 @@
 scalar Date
 
 type Todo {
-  _id: ID
+  _id: ID!
   description: String
   done: Boolean
-  userId: String
+  userId: String!
   creatAt: Date
-
-  }
+}
 
 input TodoInput {
   description: String
   done: Boolean
-  userId: String
+  userId: String!
+}
+
+input TodoEditInput {
+  description: String
+  done: Boolean
 }
 
 type Query {
@@ -21,4 +25,5 @@ type Query {
 
 type Mutation {
   addTodo(input: TodoInput): Todo
+  updateTodo(_id: ID!, input: TodoEditInput): Todo
 }
