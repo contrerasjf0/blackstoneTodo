@@ -9,8 +9,10 @@ const cors = require('cors');
 const { readFileSync } = require('fs');
 const { join } = require('path');
 
-const { config } = require('./config');
 const connectDB = require('./db');
+
+const { config } = require('./config');
+const resolvers = require('./resolvers')
 const { customFormatErrorHandler } = require('./graphql/ErrorHandler');
 
 const authMiddleware = jwt({
@@ -20,8 +22,6 @@ const authMiddleware = jwt({
 });
 
 const app = express();
-
-const resolvers = require('./resolvers')
 
 const typeDefs = readFileSync(
   join(__dirname, 'graphql', 'schema.graphql'),
