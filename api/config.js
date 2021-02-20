@@ -8,6 +8,10 @@ const config= {
     dbPasswd: process.env.DB_PASSWD,
     dbHost: process.env.DB_HOST,
     dbName: process.env.DB_NAME
+  },
+  auth: {
+    jwtSecret: process.env.JWT_SECRET,
+    salt: process.env.SALT
   }
 }
 

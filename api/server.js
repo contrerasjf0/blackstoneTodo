@@ -4,13 +4,20 @@ require('dotenv').config()
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const { makeExecutableSchema } = require('graphql-tools');
+const jwt = require('express-jwt');
 const cors = require('cors');
 const { readFileSync } = require('fs');
 const { join } = require('path');
 
 const { config } = require('./config');
 const connectDB = require('./db');
+const { customFormatErrorHandler } = require('./graphql/ErrorHandler');
 
+const authMiddleware = jwt({
+  secret: config.auth.jwtSecret,
+  credentialsRequired: false,
+  algorithms: ['HS256']
+});
 
 const app = express();
 
@@ -24,12 +31,17 @@ const typeDefs = readFileSync(
 const schemas = makeExecutableSchema({ typeDefs, resolvers })
 
 app.use(cors());
+app.use(authMiddleware);
 
-app.use('/api', graphqlHTTP({
+app.use('/api', graphqlHTTP((req) => ({
   schema: schemas,
   rootValue: resolvers,
-  graphiql: config.server.isDev
-}));
+  graphiql: config.server.isDev,
+  customFormatErrorFn: customFormatErrorHandler,
+  context: {
+    user: req.user
+  }
+})));
 
 connectDB();
 
