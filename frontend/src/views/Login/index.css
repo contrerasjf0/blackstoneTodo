@@ -1,0 +1,13 @@
+
+.loginView > .MuiPaper-root > div:first-child *{
+  margin: 12px;
+}
+
+.loginView > .MuiPaper-root > .MuiFormControl-root{
+  margin-top: 0;
+}
+
+.loginView > .MuiPaper-root > p{
+  text-align: left;
+  font-size: 15px;
+}

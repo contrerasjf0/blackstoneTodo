@@ -1,7 +1,7 @@
 import './App.css';
 import { Grid } from '@material-ui/core';
 
-import Login from './views/Login';
+import Login from './views/Login/';
 
 
 
