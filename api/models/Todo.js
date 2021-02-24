@@ -5,7 +5,10 @@ const { ObjectId } = mongoose.Types;
 const TodoSchema = new Schema({
   description: String,
   userId: String,
-  done: Boolean,
+  done: {
+    type: Boolean,
+    default: false
+  },
   creatAt: {
     type: Date,
     default: Date.now
@@ -52,6 +55,18 @@ class Todo {
       console.log('Error to update records');
     }
     return document;
+  }
+
+  async remove(id) {
+    let document;
+
+    try {
+      document = await this.model.deleteOne({_id: new ObjectId(id)});
+    } catch (err) {
+      console.log('Error to update records');
+    }
+    
+    return { id, deletedCount: document.deletedCount };
   }
 
 }

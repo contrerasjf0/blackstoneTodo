@@ -8,6 +8,11 @@ type Todo {
   creatAt: Date
 }
 
+type TodoRemovedInfo {
+  id: ID!
+  deletedCount: String
+}
+
 type User {
   _id: ID!
   fullName: String
@@ -22,8 +27,6 @@ type Token {
 
 input TodoInput {
   description: String
-  done: Boolean
-  userId: String!
 }
 
 input TodoEditInput {
@@ -45,6 +48,7 @@ type Query {
 type Mutation {
   addTodo(input: TodoInput): Todo
   updateTodo(_id: ID!, input: TodoEditInput): Todo
+  deleteTodo(_id: ID!): TodoRemovedInfo
   singUp(input: UserInput): User
   login(userName: String, password: String): Token
 }
