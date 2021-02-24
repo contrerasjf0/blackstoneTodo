@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from '@reach/router'
+import { useNavigate } from '@reach/router';
 import { Grid, Paper, TextField, Button } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Link } from '@reach/router';

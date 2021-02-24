@@ -1,0 +1,3 @@
+.todoListView .MuiIconButton-root:hover > .MuiIconButton-label {
+  color: red;
+}
