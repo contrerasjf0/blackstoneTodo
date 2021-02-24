@@ -15,7 +15,7 @@ const handlerError = onError(({ response, graphQLErrors }) => {
 
 const authLink = setContext((_, { headers }) => {
   
-  const token = localStorage.getItem('token');
+  const token = window.localStorage.getItem('REMEBERME_TOKEN');
 
   return {
     headers: {

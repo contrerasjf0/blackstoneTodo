@@ -22,7 +22,6 @@ function App() {
             {!isAuth && <Singup path="/signup"/>}
             {!isAuth && <Redirect noThrow from="/" to="/login"/>}
             <Home default path="/"/>
-            
           </Router>
         </Grid>
       </Grid>
